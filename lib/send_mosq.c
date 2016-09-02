@@ -100,7 +100,7 @@ int _mosquitto_send_publish(struct mosquitto *mosq, uint16_t mid, const char *to
 #if defined(WITH_BROKER) && defined(WITH_WEBSOCKETS)
 	if(mosq->sock == INVALID_SOCKET && !mosq->wsi) return MOSQ_ERR_NO_CONN;
 #else
-	if(mosq->sock == INVALID_SOCKET) return MOSQ_ERR_NO_CONN;
+	if(mosq->sock == INVALID_SOCKET || mosq->state != mosq_cs_connected) return MOSQ_ERR_NO_CONN;
 #endif
 
 #ifdef WITH_BROKER
